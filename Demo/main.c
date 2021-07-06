@@ -40,11 +40,15 @@ void main (void)
     SetGpioFunction(16, GPIO_OUT);        // LED on GPIO 16
     SetGpioFunction(12, GPIO_IN);        // Button on GPIO 12
 
+    irqBlock();
+
     EnableGpioDetect(12, DETECT_RISING);
     ClearGpioInterrupt(12);
 
     irqRegister(49, button_handler, NULL);
     irqEnable(49);
+
+    irqUnblock();
 
     xTaskCreate(task1, (const signed char*)"LED_0", 128, NULL, 0, NULL);
     xTaskCreate(task2, (const signed char*)"LED_1", 128, NULL, 0, NULL);
