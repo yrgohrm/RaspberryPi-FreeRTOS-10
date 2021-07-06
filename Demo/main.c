@@ -7,9 +7,7 @@
 static volatile int blink = 1;
 
 void task1(void *pParam) {
-    int i = 0;
     while(1) {
-        i++;
         if (blink)
             SetGpio(16, 1);
         vTaskDelay(200);
@@ -17,9 +15,7 @@ void task1(void *pParam) {
 }
 
 void task2(void *pParam) {
-    int i = 0;
     while(1) {
-        i++;
         vTaskDelay(100);
         SetGpio(16, 0);
         vTaskDelay(100);
