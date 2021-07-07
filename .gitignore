@@ -4,4 +4,4 @@ kernel.img
 kernel.elf
 kernel.list
 kernel.syms
-
+*.py[cod]
