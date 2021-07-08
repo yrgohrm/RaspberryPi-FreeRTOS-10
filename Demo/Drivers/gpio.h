@@ -81,8 +81,8 @@ enum DETECT_TYPE {
 /* GPIO pull up or down states */
 enum PULL_STATE {
 	PULL_DISABLE,
-	PULL_UP,
 	PULL_DOWN,
+	PULL_UP,
 	PULL_RESERVED
 };
 
@@ -93,18 +93,20 @@ enum GPIO_DIR {
 };
 
 /* GPIO pin setup */
-void SetGpioFunction	(unsigned int pinNum, unsigned int funcNum);
+void SetGpioFunction(unsigned int pinNum, unsigned int funcNum);
 /* A simple wrapper around SetGpioFunction */
-void SetGpioDirection	(unsigned int pinNum, enum GPIO_DIR dir);
+void SetGpioDirection(unsigned int pinNum, enum GPIO_DIR dir);
 
 /* Set GPIO output level */
-void SetGpio			(unsigned int pinNum, unsigned int pinVal);
+void SetGpio(unsigned int pinNum, unsigned int pinVal);
 
 /* Read GPIO pin level */
-int ReadGpio			(unsigned int pinNum);
+int ReadGpio(unsigned int pinNum);
 
-/* GPIO pull up/down resistor control function (NOT YET IMPLEMENTED) */
-int PudGpio				(unsigned int pinNum, enum PULL_STATE state);
+/* GPIO pull up/down resistor control function.
+ * "pins" is set to 1 for gpio 1, 0x3 for gpio 1 and 2 etc.
+ */
+void PudGpio(unsigned int pins, enum PULL_STATE state);
 
 /* Interrupt related functions */
 void EnableGpioDetect	(unsigned int pinNum, enum DETECT_TYPE type);

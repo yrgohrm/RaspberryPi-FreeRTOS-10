@@ -101,7 +101,6 @@ typedef struct {
 
 volatile BCM2835_GPIO_REGS * const pRegs = (BCM2835_GPIO_REGS *) (0x20200000);
 
-
 void SetGpioFunction(unsigned int pinNum, unsigned int funcNum) {
 
 	int offset = pinNum / 10;
@@ -131,6 +130,23 @@ void SetGpio(unsigned int pinNum, unsigned int pinVal) {
 
 int ReadGpio(unsigned int pinNum) {
 	return ((pRegs->GPLEV[pinNum/32])>>(pinNum%32))&1;
+}
+
+void PudGpio(unsigned int pins, enum PULL_STATE state) {
+    pRegs->GPPUD[0] = state;
+
+    for (int i = 0; i < 150; ++i) {
+        asm volatile("nop");
+    }
+    
+    pRegs->GPPUDCLK[0] = pins;
+
+    for (int i = 0; i < 150; ++i) {
+        asm volatile("nop");
+    }
+
+    pRegs->GPPUD[0] = 0;
+    pRegs->GPPUDCLK[0] = 0;
 }
 
 void EnableGpioDetect(unsigned int pinNum, enum DETECT_TYPE type)
